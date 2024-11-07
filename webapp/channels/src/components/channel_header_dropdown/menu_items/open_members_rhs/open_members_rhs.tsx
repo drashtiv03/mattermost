@@ -17,6 +17,7 @@ type OwnProps = {
     id: string;
     editMembers?: boolean;
     text: string;
+    icon:React.ReactElement;
 }
 
 type Props = {
@@ -32,6 +33,7 @@ const ToggleChannelMembersRHS = ({
     text,
     editMembers = false,
     actions,
+    icon,
 }: Props) => {
     const openRHSIfNotOpen = () => {
         if (rhsOpen) {
@@ -46,6 +48,7 @@ const ToggleChannelMembersRHS = ({
             id={id}
             onClick={openRHSIfNotOpen}
             text={text}
+            icon={icon}
         />
     );
 };

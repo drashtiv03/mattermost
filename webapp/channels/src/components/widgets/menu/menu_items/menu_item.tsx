@@ -13,7 +13,7 @@ export default function menuItem(Component: React.ComponentType<any>) {
     type Props = {
         show: boolean;
         id?: string;
-        icon?: React.ReactNode;
+        icon?: React.ReactElement;
         text?: React.ReactNode;
     }
     class MenuItem extends React.PureComponent<Props & React.ComponentProps<typeof Component>> {

@@ -2,36 +2,34 @@
 // See LICENSE.txt for license information.
 
 // Purpose of this file to exists is only required until channel header dropdown is migrated to new menus
-import React, {memo} from 'react';
-import {useIntl} from 'react-intl';
-import {useDispatch, useSelector} from 'react-redux';
-
+import React, { memo } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     FolderOutlineIcon,
     StarOutlineIcon,
     FolderMoveOutlineIcon,
 } from '@mattermost/compass-icons/components';
-import type {ChannelCategory} from '@mattermost/types/channel_categories';
-import type {Channel} from '@mattermost/types/channels';
+import type { ChannelCategory } from '@mattermost/types/channel_categories';
+import type { Channel } from '@mattermost/types/channels';
 
-import {CategoryTypes} from 'mattermost-redux/constants/channel_categories';
-import {getCategoryInTeamWithChannel} from 'mattermost-redux/selectors/entities/channel_categories';
-import {getAllChannels} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import { CategoryTypes } from 'mattermost-redux/constants/channel_categories';
+import { getCategoryInTeamWithChannel } from 'mattermost-redux/selectors/entities/channel_categories';
+import { getAllChannels } from 'mattermost-redux/selectors/entities/channels';
+import { getCurrentTeam } from 'mattermost-redux/selectors/entities/teams';
 
-import {trackEvent} from 'actions/telemetry_actions';
-import {addChannelsInSidebar} from 'actions/views/channel_sidebar';
-import {openModal} from 'actions/views/modals';
-import {getCategoriesForCurrentTeam} from 'selectors/views/channel_sidebar';
+import { trackEvent } from 'actions/telemetry_actions';
+import { addChannelsInSidebar } from 'actions/views/channel_sidebar';
+import { openModal } from 'actions/views/modals';
+import { getCategoriesForCurrentTeam } from 'selectors/views/channel_sidebar';
 
 import EditCategoryModal from 'components/edit_category_modal';
 import Menu from 'components/widgets/menu/menu';
 
-import Constants, {ModalIdentifiers} from 'utils/constants';
+import Constants, { ModalIdentifiers } from 'utils/constants';
 
-import type {GlobalState} from 'types/store';
-import type {Menu as MenuType} from 'types/store/plugins';
-
+import type { GlobalState } from 'types/store';
+import type { Menu as MenuType } from 'types/store/plugins';
 type Props = {
     channel: Channel;
     openUp: boolean;
@@ -39,7 +37,7 @@ type Props = {
 };
 
 const ChannelMoveToSubMenuOld = (props: Props) => {
-    const {formatMessage} = useIntl();
+    const { formatMessage } = useIntl();
 
     const dispatch = useDispatch();
 
@@ -71,21 +69,19 @@ const ChannelMoveToSubMenuOld = (props: Props) => {
         }));
         trackEvent('ui', 'ui_sidebar_channel_menu_createCategory');
     }
-
     function createSubmenuItemsForCategoryArray(categories: ChannelCategory[]): MenuType[] {
         const allCategories = categories.map((category: ChannelCategory) => {
             let text = category.display_name;
-
             if (category.type === CategoryTypes.FAVORITES) {
-                text = formatMessage({id: 'sidebar_left.sidebar_channel_menu.favorites', defaultMessage: 'Favorites'});
+                text = formatMessage({ id: 'sidebar_left.sidebar_channel_menu.favorites', defaultMessage: 'Favorites' });
             }
             if (category.type === CategoryTypes.CHANNELS) {
-                text = formatMessage({id: 'sidebar_left.sidebar_channel_menu.channels', defaultMessage: 'Channels'});
+                text = formatMessage({ id: 'sidebar_left.sidebar_channel_menu.channels', defaultMessage: 'Channels' });
             }
 
             return {
                 id: `moveToCategory-${props.channel.id}-${category.id}`,
-                icon: category.type === CategoryTypes.FAVORITES ? (<StarOutlineIcon size={16}/>) : (<FolderOutlineIcon size={16}/>),
+                icon: category.type === CategoryTypes.FAVORITES ? (<StarOutlineIcon size={16} />) : (<FolderOutlineIcon size={16} />),
                 direction: 'right',
                 text,
                 action: () => handleMoveToCategory(category.id),
@@ -95,19 +91,21 @@ const ChannelMoveToSubMenuOld = (props: Props) => {
         const dividerAndNewCategory = [
             {
                 id: 'ChannelMenu-moveToDivider',
-                text: (<span className='MenuGroup menu-divider'/>),
+                text: (<span className='MenuGroup menu-divider' />),
             },
             {
                 id: `moveToNewCategory-${props.channel.id}`,
-                icon: (<FolderMoveOutlineIcon size={16}/>),
+                icon: (<FolderMoveOutlineIcon size={16} />),
                 direction: 'right' as any,
-                text: formatMessage({id: 'sidebar_left.sidebar_channel_menu.moveToNewCategory', defaultMessage: 'New Category'}),
+                text: formatMessage({ id: 'sidebar_left.sidebar_channel_menu.moveToNewCategory', defaultMessage: 'New Category' }),
                 action: handleMoveToNewCategory,
             },
         ];
 
         return [...allCategories, ...dividerAndNewCategory];
     }
+
+
 
     function filterCategoriesBasedOnChannelType(categories: ChannelCategory[], isDmOrGm = false) {
         if (isDmOrGm) {
@@ -116,6 +114,7 @@ const ChannelMoveToSubMenuOld = (props: Props) => {
 
         return categories.filter((category) => category.type !== CategoryTypes.DIRECT_MESSAGES);
     }
+
 
     function getMoveToCategorySubmenuItems(categories: ChannelCategory[]) {
         const isSubmenuOneOfSelectedChannels = multiSelectedChannelIds.includes(props.channel.id);
@@ -153,9 +152,12 @@ const ChannelMoveToSubMenuOld = (props: Props) => {
             <Menu.ItemSubMenu
                 id={`moveTo-${props.channel.id}`}
                 subMenu={getMoveToCategorySubmenuItems(categories)}
-                text={formatMessage({id: 'sidebar_left.sidebar_channel_menu.moveTo', defaultMessage: 'Move to...'})}
+                text={formatMessage({ id: 'sidebar_left.sidebar_channel_menu.members', defaultMessage: '  Move To...' })}
                 direction={'right'}
-                icon={props.inHeaderDropdown ? null : <FolderMoveOutlineIcon size={16}/>}
+                icon={
+                    <span style={{ fontSize: '1.25rem', verticalAlign: 'middle', marginLeft: '2' }}>
+                        <FolderMoveOutlineIcon size={16} color='#808080' />
+                    </span>}
                 openUp={props.openUp}
                 styleSelectableItem={true}
                 selectedValueText={currentCategory?.display_name}

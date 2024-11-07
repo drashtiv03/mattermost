@@ -18,11 +18,11 @@ type Props = {
     channel: Channel;
     rhsOpen: boolean;
     actions: Action;
+    icon:React.ReactElement;
 };
 
-const ToggleInfo = ({show, channel, rhsOpen, actions}: Props) => {
-    const intl = useIntl();
-
+const ToggleInfo = ({show, channel, rhsOpen, actions,icon}: Props) => {
+    const intl=useIntl();
     const toggleRHS = () => {
         if (rhsOpen) {
             actions.closeRightHandSide();
@@ -42,7 +42,15 @@ const ToggleInfo = ({show, channel, rhsOpen, actions}: Props) => {
         <Menu.ItemAction
             show={show}
             onClick={toggleRHS}
-            text={text}
+            text={
+            <span style={{display:'inline-flex',verticalAlign:'centre'}}>
+            {text}
+            </span>}
+            icon={
+                <span style={{display:'inline-flex,',verticalAlign:'centre'}}>
+                    {icon}
+                </span>
+            }
         />
     );
 };

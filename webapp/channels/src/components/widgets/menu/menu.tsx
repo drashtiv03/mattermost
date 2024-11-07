@@ -46,6 +46,7 @@ export default class Menu extends React.PureComponent<Props> {
 
     public node: React.RefObject<HTMLUListElement>; //Public because it is used by tests
     private observer: MutationObserver;
+    static Wrapper: any;
 
     public constructor(props: Props) {
         super(props);

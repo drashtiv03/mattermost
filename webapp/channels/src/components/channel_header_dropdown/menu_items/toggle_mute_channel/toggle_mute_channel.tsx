@@ -41,6 +41,11 @@ type Props = {
      * Object with action creators
      */
     actions: Actions;
+
+     /**
+     * Object with action creators
+     */
+     icon: React.ReactElement;
 };
 
 export default function MenuItemToggleMuteChannel({
@@ -49,6 +54,7 @@ export default function MenuItemToggleMuteChannel({
     channel,
     user,
     actions,
+    icon,
 }: Props) {
     const intl = useIntl();
 
@@ -73,7 +79,16 @@ export default function MenuItemToggleMuteChannel({
         <Menu.ItemAction
             id={id}
             onClick={handleClick}
-            text={text}
+            text={
+                <span style={{display:'inline-flex',verticalAlign:'centre'}}>
+                    {text}
+                </span>
+            }
+            icon={
+                <span style={{display:'inline-flex',verticalAlign:'centre'}}>
+                    {icon}
+                </span>
+            }
         />
     );
 }

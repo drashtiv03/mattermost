@@ -12,6 +12,7 @@ import Menu from 'components/widgets/menu/menu';
 import {Constants, ModalIdentifiers} from 'utils/constants';
 
 import type {PropsFromRedux} from './index';
+import { IconBaseProps } from 'react-icons';
 
 type Props = PropsFromRedux & {
 
@@ -34,7 +35,9 @@ type Props = PropsFromRedux & {
      * Use for test selector
      */
     id?: string;
-};
+
+    icon?:React.ReactElement;
+}
 
 const LeaveChannel = ({
     isDefault = true,
@@ -44,7 +47,7 @@ const LeaveChannel = ({
         leaveChannel,
         openModal,
     },
-    id,
+    id,icon,
 }: Props) => {
     const intl = useIntl();
 
@@ -71,6 +74,7 @@ const LeaveChannel = ({
             onClick={handleLeave}
             text={intl.formatMessage({id: 'channel_header.leave', defaultMessage: 'Leave Channel'})}
             isDangerous={true}
+            icon={icon}
         />
     );
 };
