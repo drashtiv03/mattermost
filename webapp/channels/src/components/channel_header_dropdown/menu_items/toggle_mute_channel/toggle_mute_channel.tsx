@@ -45,7 +45,7 @@ type Props = {
      /**
      * Object with action creators
      */
-     icon: React.ReactElement;
+     icon?: React.ReactElement;
 };
 
 export default function MenuItemToggleMuteChannel({

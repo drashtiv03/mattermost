@@ -21,9 +21,10 @@ type Props = {
     showUnread?: boolean;
     disabled?: boolean;
     onClick?: () => void;
+    icon?:React.ReactElement;
 }
 
-export const MenuItemToggleModalReduxImpl: React.FC<Props> = ({modalId, dialogType, dialogProps, text, ariaLabel, extraText, children, className, sibling, showUnread, disabled, onClick}: Props) => (
+export const MenuItemToggleModalReduxImpl: React.FC<Props> = ({modalId, dialogType, dialogProps, text, ariaLabel, extraText, children, className, sibling, showUnread, disabled, onClick,icon}: Props) => (
     <>
         <ToggleModalButton
             ariaLabel={ariaLabel}

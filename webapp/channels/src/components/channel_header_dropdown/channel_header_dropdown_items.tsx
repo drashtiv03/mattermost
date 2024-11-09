@@ -39,6 +39,8 @@ import ChannelActionsMenu from 'components/channel_settings_submenu';
 import NotChannelSubMenu from '../not_channel_submenu';
 import DMChannelSubMenu from 'components/dm_channel_submenu';
 import { Actions } from 'components/convert_gm_to_channel_modal';
+import { ChannelInviteModal } from 'components/channel_invite_modal/channel_invite_modal';
+import MoreDirectChannels from 'components/more_direct_channels/more_direct_channels';
 
 
 
@@ -134,7 +136,7 @@ export default class ChannelHeaderDropdown extends React.PureComponent<Props> {
                         channel,
                         currentUser: user,
                     }}
-                    text={localizeMessage('navbar.preferences', 'Notification Preferences')}
+                    text={localizeMessage({id:'navbar.preferences', defaultMessage:'Notification Preferences'})}
                     icon={<BellOutlineIcon color='#808080' />}
                 />
                 {(channel.type === Constants.OPEN_CHANNEL || isPrivate) && (
@@ -187,12 +189,14 @@ export default class ChannelHeaderDropdown extends React.PureComponent<Props> {
                             currentUser: user,
                         }}
                         text={localizeMessage({id: 'navbar.preferences', defaultMessage: 'Notification Preferences'})}
+                        icon={<BellOutlineIcon color='#808080'/>}
                     />
                     <MenuItemToggleMuteChannel
                         id='channelToggleMuteChannel'
                         user={user}
                         channel={channel}
                         isMuted={isMuted}
+                        icon={<BellOffOutlineIcon color='#808080'/>}
                     />
                 </Menu.Group>
 
@@ -226,14 +230,14 @@ export default class ChannelHeaderDropdown extends React.PureComponent<Props> {
                         id='channelViewMembers'
                         channel={channel}
                         show={channel.type !== Constants.DM_CHANNEL && channel.type !== Constants.GM_CHANNEL && (isArchived || isDefault)}
-                        text={localizeMessage('channel_header.Members', ' Members')}
+                        text={localizeMessage({id:'channel_header.Members', defaultMessage:' Members'})}
                         icon={<AccountOutlineIcon color='#808080' />}
                     />
                     <MenuItemOpenMembersRHS
                         id='channelViewMembers'
                         channel={channel}
                         show={channel.type === Constants.GM_CHANNEL}
-                        text={localizeMessage('channel_header.Members', ' Members')}
+                        text={localizeMessage({id:'channel_header.Members', defaultMessage:' Members'})}
                         icon={<AccountOutlineIcon color='#808080' />}
                     />
                     <ChannelPermissionGate
@@ -246,7 +250,7 @@ export default class ChannelHeaderDropdown extends React.PureComponent<Props> {
                         id='channelViewMembers'
                         channel={channel}
                         show={channel.type !== Constants.DM_CHANNEL && channel.type !== Constants.GM_CHANNEL && !isArchived && !isDefault}
-                        text={localizeMessage('channel_header.Members', ' Members')}
+                        text={localizeMessage({id:'channel_header.Members', defaultMessage:' Members'})}
                         icon={<AccountOutlineIcon color='#808080' />}
                     />
                     </ChannelPermissionGate>
@@ -268,7 +272,7 @@ export default class ChannelHeaderDropdown extends React.PureComponent<Props> {
                         text={
                             <span style={{ display: 'inline-flex', alignItems: 'center', verticalAlign: 'middle' }}>
                                 <MdGridView size={16}/>
-                                {localizeMessage('sidebar_left.sidebar_channel_menu.plugins',' More Actions')}
+                                {localizeMessage({id:'sidebar_left.sidebar_channel_menu.plugins',defaultMessage:' More Actions'})}
                             </span>
                         }
                         direction="right"
@@ -298,7 +302,7 @@ export default class ChannelHeaderDropdown extends React.PureComponent<Props> {
                                 channel,
                                 penultimateViewedChannelName,
                             }}
-                            text={localizeMessage('channel_header.delete', 'Archive Channel')}
+                            text={localizeMessage({id:'channel_header.delete', defaultMessage:'Archive Channel'})}
                             icon={<ArchiveOutlineIcon />}
                         />
                     </ChannelPermissionGate>
